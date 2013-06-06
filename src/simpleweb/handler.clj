@@ -14,12 +14,13 @@
 (defn index []
   (html
     [:head
-     [:title "Bitcoins with Friends"]
+     [:title "Simple Clojure Webapp Example"]
      (include-css "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css"
                   "/css/styles.css")]
     [:body
      [:div.container
-      "hello!"]
+      [:div.content
+       "hello!"]]
      (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
      (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
 
