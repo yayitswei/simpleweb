@@ -5,6 +5,8 @@
                  [http-kit "2.1.3"]
                  [org.clojure/tools.logging "0.2.6"]
                  [hiccup "1.0.3"]
+                 [ring/ring-devel "1.2.0-beta3"]
+                 [ring/ring-core "1.2.0-beta3"]
                  [compojure "1.1.5"]]
   :plugins [[lein-ring "0.8.5"]]
   :main simpleweb.handler

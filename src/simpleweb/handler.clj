@@ -5,8 +5,11 @@
         [hiccup.core :only [html]]
         [hiccup.page :only [html5 include-css include-js]])
   (:require [org.httpkit.server :as server]
+            [ring.middleware.reload :as reload]
             [compojure.handler :as handler]
             [compojure.route :as route]))
+
+(def prod? (atom (System/getenv "LEIN_NO_DEV")))
 
 (defn index []
   (html
@@ -26,7 +29,9 @@
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (if @prod?
+    (handler/site app-routes)
+    (reload/wrap-reload (handler/site app-routes))))
 
 ;; running the server
 (defn start-app [port]
