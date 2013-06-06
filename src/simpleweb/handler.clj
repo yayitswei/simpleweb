@@ -1,6 +1,7 @@
 (ns simpleweb.handler
   (:use compojure.core)
-  (:require [compojure.handler :as handler]
+  (:require [org.httpkit.server :as server]
+            [compojure.handler :as handler]
             [compojure.route :as route]))
 
 (defroutes app-routes
@@ -10,3 +11,11 @@
 
 (def app
   (handler/site app-routes))
+
+;; running the server
+(defn start-app [port]
+  (server/run-server app {:port port :join? false}))
+
+(defn -main [& args]
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "3000"))]
+    (start-app port)))
