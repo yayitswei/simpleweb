@@ -1,11 +1,27 @@
 (ns simpleweb.handler
-  (:use compojure.core)
+  (:use compojure.core
+        [clojure.tools.logging :only [info debug warn error]]
+        ;; for view
+        [hiccup.core :only [html]]
+        [hiccup.page :only [html5 include-css include-js]])
   (:require [org.httpkit.server :as server]
             [compojure.handler :as handler]
             [compojure.route :as route]))
 
+(defn index []
+  (html
+    [:head
+     [:title "Bitcoins with Friends"]
+     (include-css "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css"
+                  "/css/styles.css")]
+    [:body
+     [:div.container
+      "hello!"]
+     (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+     (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
+
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" [] (index))
   (route/resources "/")
   (route/not-found "Not Found"))
 
@@ -14,6 +30,7 @@
 
 ;; running the server
 (defn start-app [port]
+  (info "Starting server on port" port)
   (server/run-server app {:port port :join? false}))
 
 (defn -main [& args]
