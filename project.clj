@@ -9,8 +9,20 @@
                  [ring/ring-core "1.2.0-beta3"]
                  [compojure "1.1.5"]
                  [org.clojure/tools.nrepl "0.2.3"]]
-  :plugins [[lein-ring "0.8.5"]]
-  :main simpleweb.handler
-  :ring {:handler simpleweb.handler/app}
+  :plugins [[lein-ring "0.8.5"]
+            [lein-cljsbuild "0.3.2"]]
+  :main simpleweb.server
   :profiles
-  {:dev {:dependencies [[ring-mock "0.1.5"]]}})
+  {:dev {:dependencies [[ring-mock "0.1.5"]]}}
+
+  ;; for cljs
+  :hooks [leiningen.cljsbuild]
+  :source-paths ["src/clj"]
+  :cljsbuild {
+    :builds {
+      :main {
+        :source-paths ["src/cljs"]
+        :compiler {:output-to "resources/public/js/cljs.js"
+                   :optimizations :simple
+                   :pretty-print true}
+        :jar true}}})

@@ -1,4 +1,4 @@
-(ns simpleweb.handler
+(ns simpleweb.server
   (:use compojure.core
         [clojure.tools.logging :only [info debug warn error]]
         ;; for view
@@ -23,8 +23,10 @@
                   "/css/styles.css")]
     [:body
      [:div.container
-      [:div.content "counter: " @counter]]
-     (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+      [:div.content "counter: " @counter
+       [:div#clickable "click me"]]]
+     (include-js "/js/cljs.js")
+     (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
      (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
 
 ;; handler
