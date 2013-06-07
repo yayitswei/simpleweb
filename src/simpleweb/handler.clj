@@ -5,11 +5,13 @@
         [hiccup.core :only [html]]
         [hiccup.page :only [html5 include-css include-js]])
   (:require [org.httpkit.server :as server]
+            [clojure.tools.nrepl.server :as nrepl]
             [ring.middleware.reload :as reload]
             [compojure.handler :as handler]
             [compojure.route :as route]))
 
 (def prod? (atom (System/getenv "LEIN_NO_DEV")))
+(defonce counter (atom 0))
 
 (defn index []
   (html
@@ -20,7 +22,8 @@
     [:body
      [:div.container
       [:div.content
-       "hello!"]]
+       "counter: "
+       @counter]]
      (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
      (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
 
@@ -34,11 +37,16 @@
     (handler/site app-routes)
     (reload/wrap-reload (handler/site app-routes))))
 
+(defn start-nrepl-server [port]
+  (info "Starting nrepl server on port" port)
+  (defonce server (nrepl/start-server :port port)))
+
 ;; running the server
 (defn start-app [port]
   (info "Starting server on port" port)
   (server/run-server app {:port port :join? false}))
 
 (defn -main [& args]
+  (when-not @prod? (start-nrepl-server 7888))
   (let [port (Integer/parseInt (or (System/getenv "PORT") "3000"))]
     (start-app port)))
