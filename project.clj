@@ -12,6 +12,8 @@
   :plugins [[lein-ring "0.8.5"]
             [lein-cljsbuild "0.3.2"]]
   :main simpleweb.server
+  :min-lein-version "2.0.0"
+
   :profiles
   {:dev {:dependencies [[ring-mock "0.1.5"]]}}
 
