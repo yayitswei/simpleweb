@@ -6,6 +6,7 @@
         [hiccup.page :only [html5 include-css include-js]])
   (:require [org.httpkit.server :as server]
             [clojure.tools.nrepl.server :as nrepl]
+            [cemerick.shoreleave.rpc :refer (defremote) :as rpc]
             [ring.middleware.reload :as reload]
             [compojure.handler :as handler]
             [compojure.route :as route]))
@@ -23,22 +24,31 @@
                   "/css/styles.css")]
     [:body
      [:div.container
-      [:div.content "counter: " @counter
-       [:div#clickable "click me"]]]
-     (include-js "/js/cljs.js")
+      [:div.content "counter: " [:span#counter @counter]]
+      [:button.btn "click me"]]
      (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-     (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
+     (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")
+     (include-js "/js/cljs.js")
+     ]))
 
 ;; handler
+
+; remotes
+(defremote inc-counter []
+  (swap! counter inc))
+
+; routes
 (defroutes app-routes
   (GET "/" [] (index))
   (route/resources "/")
   (route/not-found "Not Found"))
 
+(def all-routes (rpc/wrap-rpc app-routes))
+
 (def app
   (if @prod?
     (handler/site app-routes)
-    (reload/wrap-reload (handler/site app-routes))))
+    (reload/wrap-reload (handler/site all-routes))))
 
 ;; init
 (defn start-nrepl-server [port]
