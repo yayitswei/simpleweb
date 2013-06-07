@@ -10,9 +10,11 @@
             [compojure.handler :as handler]
             [compojure.route :as route]))
 
-(def prod? (atom (System/getenv "LEIN_NO_DEV")))
+;; state
+(defonce prod? (atom (System/getenv "LEIN_NO_DEV")))
 (defonce counter (atom 0))
 
+;; templates
 (defn index []
   (html
     [:head
@@ -21,12 +23,11 @@
                   "/css/styles.css")]
     [:body
      [:div.container
-      [:div.content
-       "counter: "
-       @counter]]
+      [:div.content "counter: " @counter]]
      (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
      (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")]))
 
+;; handler
 (defroutes app-routes
   (GET "/" [] (index))
   (route/resources "/")
@@ -37,11 +38,11 @@
     (handler/site app-routes)
     (reload/wrap-reload (handler/site app-routes))))
 
+;; init
 (defn start-nrepl-server [port]
   (info "Starting nrepl server on port" port)
   (defonce server (nrepl/start-server :port port)))
 
-;; running the server
 (defn start-app [port]
   (info "Starting server on port" port)
   (server/run-server app {:port port :join? false}))
