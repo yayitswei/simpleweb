@@ -1,13 +1,6 @@
 (ns client
   (:require [shoreleave.remotes.http-rpc :as rpc])
-  (:use [jayq.core :only [$ inner attr parents find bind val data append prepend on
-                          document-ready
-                          parent children
-                          remove
-                          toggle-class
-                          add-class remove-class has-class
-                          show hide
-                          text css html]]
+  (:use [jayq.core :only [$ text]]
         [jayq.util :only [log wait]]))
 
 (set! shoreleave.remotes.http-rpc/*remote-uri* "/_fetch")

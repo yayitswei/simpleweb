@@ -47,7 +47,7 @@
 
 (def app
   (if @prod?
-    (handler/site app-routes)
+    (handler/site all-routes)
     (reload/wrap-reload (handler/site all-routes))))
 
 ;; init
