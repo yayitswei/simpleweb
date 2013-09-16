@@ -7,6 +7,10 @@
 
 (defn handle-click []
   (rpc/remote-callback
-        :inc-counter [] #(text ($ :#counter) %)))
+        :inc-counter [] #(text ($ :#counter) (str "The counter value is:" %))))
+
+(defn test-fn [a b c]
+  (log "you entered: " a b c)
+  (a b c))
 
 (.click ($ :.btn) handle-click)
