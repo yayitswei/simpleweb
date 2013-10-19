@@ -13,12 +13,12 @@
                  [jayq "2.0.0"]
                  [com.novemberain/monger "1.6.0-beta2"]
                  [org.clojure/tools.nrepl "0.2.3"]]
-  :plugins [[lein-cljsbuild "0.3.2"]]
+  :plugins [[lein-cljsbuild "0.3.3"]]
   :main simpleweb.server
   :min-lein-version "2.0.0"
 
   ;; for cljs
-;  :hooks [leiningen.cljsbuild]
+  :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
   :cljsbuild {
     :builds {

@@ -1,11 +1,10 @@
 (ns simpleweb.server
   (:gen-class)
-  (:use compojure.core
-        [clojure.tools.logging :only [info debug warn error]]
-        ;; for view
-        [hiccup.core :only [html]]
-        [hiccup.page :only [html5 include-css include-js]])
-  (:require [org.httpkit.server :as server]
+  (:require [compojure.core :refer :all]
+            [hiccup.core :refer [html]]
+            [hiccup.page :refer [html5 include-css include-js]]
+            [clojure.tools.logging :refer [info debug warn error]]
+            [org.httpkit.server :as server]
             [clojure.tools.nrepl.server :as nrepl]
             [cemerick.shoreleave.rpc :refer (defremote) :as rpc]
             [monger.core :as mg]
@@ -30,12 +29,10 @@
      [:div.container
       [:div.content "counter: " [:span#counter @counter]]
       [:button.btn "click me"]
-      [:div "some edit"]
-      ]
+      [:div "some edit"]]
      (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
      (include-js "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js")
-     (include-js "/js/cljs.js")
-     ]))
+     (include-js "/js/cljs.js")]))
 
 ;; handler
 
