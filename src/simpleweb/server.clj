@@ -19,8 +19,9 @@
   (GET "/" [] (index))
   (route/not-found "Not Found"))
 
-;; (def app (handler/site #'app-routes))
-
-(defn -main [& args]
+(defn go! []
   (nrepl/start-server :port 7888)
   (server/run-server #'app-routes {:port 8080 :join? false}))
+
+(defn -main [& args]
+  (go!))
