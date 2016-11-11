@@ -1,6 +1,6 @@
 (defproject simpleweb "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Reference Clojure webapp"
+  :url "https://github.com/yayitswei/simpleweb"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [http-kit "2.2.0"]
                  [hiccup "1.0.5"]

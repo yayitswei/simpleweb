@@ -1,6 +1,6 @@
 # simpleweb
 
-Reference clojure + clojurescript web app
+Reference Clojure web app
 
 ## Prerequisites
 
@@ -14,4 +14,4 @@ You will need [Leiningen][1] 2.0.0 or above installed.
 
 ## License
 
-Copyright © 2013 FIXME
+EPL
