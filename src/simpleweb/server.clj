@@ -20,8 +20,8 @@
   (route/not-found "Not Found"))
 
 (defn go! []
-  (nrepl/start-server :port 7888)
   (server/run-server #'app-routes {:port 8080 :join? false}))
 
 (defn -main [& args]
-  (go!))
+  (go!)
+  (nrepl/start-server :port 7888))
